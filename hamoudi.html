@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prescription Upload</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      text-align: center;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+
+    #uploadStatus {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Upload Prescription</h1>
+  <form id="prescriptionForm" enctype="multipart/form-data">
+    <input type="file" name="prescriptionFile" id="prescriptionFile">
+    <button type="button" onclick="uploadPrescription()">Upload</button>
+  </form>
+  <div id="uploadStatus"></div>
+  <script>
+    function uploadPrescription() {
+      var form = document.getElementById("prescriptionForm");
+      var formData = new FormData(form);
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "upload.php", true);
+
+      xhr.onload = function() {
+        if (xhr.status == 200) {
+          document.getElementById("uploadStatus").innerText = xhr.responseText;
+        } else {
+          document.getElementById("uploadStatus").innerText = "Error uploading prescription.";
+        }
+      };
+
+      xhr.send(formData);
+    }
+  </script>
+</body>
+</html>
